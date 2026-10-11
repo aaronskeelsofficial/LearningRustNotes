@@ -9,6 +9,9 @@ fn main() {
     let variable: i32 = 1;
 //    You can initialize the same variable name multiple times?
 
+    let x = 5;
+    // x = 6;
+    // This would fail to compile because all variables have mutability, lifetime, and reference to think about.
     let mut sum = 0;
     for i in 0..5 {
         sum += i;
@@ -76,4 +79,4 @@ fn main() {
  *		Box<str>: This owns/manages the data of a str inside of it, yet gives no headroom for expansion. It is used to "lock in" text ineditably taking up less space than String data.
  *			This takes less space because it doesn't need a capacity field in its core struct, and it also holds no extra headroom in memory.
  */
-{
+}
