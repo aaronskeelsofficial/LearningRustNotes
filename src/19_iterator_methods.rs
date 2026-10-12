@@ -71,4 +71,27 @@ fn main() {
         println!("{}", track.title);
     }
     // playlist has been consumed
+
+    /*
+     * Here is an example of a, for me, unpredictable behavior of rust at first
+     * We know that iterators have three forms: borrowed, borrowed mutably, and transferred ownership
+     * We can call into these explicitly by one of the three IntoIterable functions
+     * But there are other functions in the language that yield iterators that aren't quite as explicit for example: */
+    fn foo(obj: &str) {
+        obj.chars().collect();
+    }
+    /*
+     * This function takes in a reference to a str, okay no problem there
+     * Then it calls ".chars()" which turns the str into an iterator, no problem there
+     * Then... it calls ".collect()" which... transfers... ownership? What? How are we transferring ownership of a borrowed str?
+     * For me, this behavior was unpredictable and it pissed me off. It still pisses me off. It logically makes sense, but that logic
+     * feels so esoteric and unnecessary that it's silly. But here is the explanation.
+     * The &str holds UTF-8 bytes, *not chars*. That means we can't just magically obtain char from str.
+     * The char must come from processing and computing.
+     * We could run those computations, allocate a buffer, store the data, and then pass a reference,
+     * but a pointer is 8 bytes and a char is 4 bytes. The reference itself would hold more data than the char.
+     * In this instance, since we must instantiate the char anyway, we might as well give the whole thing and
+     * actually *SAVE* data. You could say "that all seems like a lot why not just return something other than a char" which is
+     * fair... but you were (I was) the one who called ".chars()" in the first place which is literally demanding chars.
+     */
 }
