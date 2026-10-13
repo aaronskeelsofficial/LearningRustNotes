@@ -39,5 +39,15 @@ fn main() {
      *      In short, it makes a control-flow graph and runs analysis on it. In places where it can't PROVE the reference is dead (since it can't simulate unpredictable function calls),
      *      it just assumes it's alive. This can cause many borrow checker headaches where YOU know the code is safe given technicalities of simulating the execution, but the compiler
      *      doesn't know it's safe. Therefore you must PROVE to the compiler its safe, or it assumes it's not and keeps the original binding frozen until the reference dies.
+     * 
+     *  
+     *  There is one more concept I have come across that seems worth discussing: stack vs heap.
+     *  When bindings have inline data stored on the stack, that is always in some capacity "owned/linked" to the stack. So when the stack containing the stack slot drops, the binding drops
+     *  along with the inline data it contains. Notice: technically *only the inline data* it contains is automatically for sure dropped by necessity. Anything that is on the heap is NOT
+     *  necessarily dropped. As a rule of thumb, by human effort not by mechanical necessity, all the features implemented by Rust themselves will handle drop behavior correctly and
+     *  they will manually choose to drop the heap. But the important part is that technically, the heap if handled incorrectly could easily become a memory leak.
+     *  Rust protects against use-after-free, double-free, and data races. It makes no promises about memory leaks.
+     *      Note: As an aside, "Box" is one of the rust features with special compiler behavior which can NOT be replicated within the language itself. A Box goes on the heap and
+     *      is automatically dropped by the compiler.
      */
 }
