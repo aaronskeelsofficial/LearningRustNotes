@@ -5,6 +5,13 @@ fn main() {
 //    There are methods (functions which bind to, and are called by, a specific instance)
 //    There are the struct, trait, struct impl, and trait impl blocks
 
+/*
+ * Below is lots of information regarding the nuanced truths of struct/trait and their definition/impl.
+ * As an attempt as summarizing all the information comprehensively:
+ *  A struct definition defines a shape, and all impl is unbounded invention meeting no criteria
+ *  A trait definition forms the contract of what functionality is expected (either by default or abstract) and all impl can only respond to that contract criteria.
+ */
+
 
 
 /*    
